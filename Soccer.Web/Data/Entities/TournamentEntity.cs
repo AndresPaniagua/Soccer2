@@ -19,6 +19,7 @@ namespace Soccer.Web.Data.Entities
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = false)]
         public DateTime StartDate { get; set; }
 
+        [DataType(DataType.DateTime)]
         [Display(Name = "Start Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = false)]
         public DateTime StartDateLocal => StartDate.ToLocalTime();
@@ -28,6 +29,7 @@ namespace Soccer.Web.Data.Entities
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = false)]
         public DateTime EndDate { get; set; }
 
+        [DataType(DataType.DateTime)]
         [Display(Name = "End Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = false)]
         public DateTime EndDateLocal => EndDate.ToLocalTime();
@@ -38,5 +40,6 @@ namespace Soccer.Web.Data.Entities
         [Display(Name = "Logo")]
         public string LogoPath { get; set; }
 
+        public TournamentEntity Tournament { get; set; }
     }
 }
