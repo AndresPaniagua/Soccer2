@@ -41,5 +41,6 @@ namespace Soccer.Web.Data.Entities
         public string LogoPath { get; set; }
 
         public TournamentEntity Tournament { get; set; }
+        public List<GroupEntity> Groups { get; internal set; }
     }
 }
