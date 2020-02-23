@@ -56,7 +56,8 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-    <a asp-action="AddGroup" asp-route-id="@Model.Id" class="btn btn-primary">Add Group</a>
+    <a asp-action="AddGroup" asp-route-id="@Model.Id" class="btn btn-primary">Add Group</a> <!-- AQUÍ ES -->
+    @*<button data-id="@Model.Id" class="btn btn-primary saveGroup" data-toggle="modal" data-target="#addGroupModal">Add Group</button>*@
     <a asp-action="Index" class="btn btn-success">Back to List</a>
 </div>
 <br />
@@ -109,7 +110,33 @@
     </div>
 </div>
 
+
+@*<div class="modal fade" id="addGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to delete the record?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="btnYesDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+
 <partial name="_DeleteDialog" />
+<partial name="_AddGroupModal" />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -129,6 +156,16 @@
             $("#btnYesDelete").click(function () {
                 window.location.href = '/Tournaments/DeleteGroup/' + item_to_delete;
             });
+
+            //var id_to_save;
+
+            //$(".saveGroup").click((e) => {
+            //    id_to_save = e.currentTarget.dataset.id;
+            //});
+
+            //$("#btnSaveGroup").click(function () {
+            //    window.location.href = '/Tournaments/AddGroup2/' + id_to_save;
+            //});
         });
     </script>
 }
