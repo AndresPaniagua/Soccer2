@@ -16,5 +16,8 @@ namespace Soccer.Web.Data.Entities
 
         public ICollection<GroupDetailEntity> GroupDetails { get; set; }
 
+        public ICollection<UserEntity> Users { get; set; }
+
+
     }
 }
