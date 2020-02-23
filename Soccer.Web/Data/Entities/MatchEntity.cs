@@ -31,6 +31,6 @@ namespace Soccer.Web.Data.Entities
 
         public GroupEntity Group { get; set; }
 
-        public ICollection<PredictionEntity> predictions { get; set; }
+        public ICollection<PredictionEntity> Predictions { get; set; }
     }
 }
