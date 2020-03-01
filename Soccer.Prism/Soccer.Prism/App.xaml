@@ -5,7 +5,14 @@
              x:Class="Soccer.Prism.App">
 	<Application.Resources>
 
-		<!-- Application resource dictionary -->
 
-	</Application.Resources>
+        <ResourceDictionary>
+
+            <!-- Parameters -->
+            <x:String x:Key="UrlAPI">https://soccerweb4-1.azurewebsites.net/</x:String>
+
+        </ResourceDictionary>
+
+
+    </Application.Resources>
 </prism:PrismApplication>
