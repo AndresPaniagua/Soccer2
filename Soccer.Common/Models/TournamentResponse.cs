@@ -25,6 +25,6 @@ namespace Soccer.Common.Models
                 ? "https://soccerweb4-1.azurewebsites.net//images/noimage.png"
                 : $"https://soccerweb4-1.azurewebsites.net{LogoPath.Substring(1)}";
 
-        public ICollection<GroupResponse> Groups { get; set; }
+        public List<GroupResponse> Groups { get; set; }
     }
 }
