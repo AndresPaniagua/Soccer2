@@ -6,5 +6,7 @@ namespace Soccer.Common.Services
     public interface IApiService
     {
         Task<Response> GetListAsync<T>(string urlBase, string servicePrefix, string controller); //Lista de cualquier cosa
+
+        Task<bool> CheckConnectionAsync(string url);
     }
 }
