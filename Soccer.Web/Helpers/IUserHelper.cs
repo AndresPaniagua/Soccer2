@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Soccer.Common.Enums;
 using Soccer.Web.Data.Entities;
 using Soccer.Web.Models;
 using System.Threading.Tasks;
@@ -21,5 +22,6 @@ namespace Soccer.Web.Helpers
 
         Task LogoutAsync();
 
+        Task<UserEntity> AddUserAsync(AddUserViewModel model, string path, UserType userType);
     }
 }
