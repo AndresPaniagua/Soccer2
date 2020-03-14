@@ -34,7 +34,7 @@ namespace Soccer.Web.Data.Entities
         [Display(Name = "Favorite Team")]
         public TeamEntity Team { get; set; }
 
-        public ICollection<PredictionEntity> predictions { get; set; }
+        public ICollection<PredictionEntity> Predictions { get; set; }
 
         [Display(Name = "User")]
         public string FullName => $"{FirstName} {LastName}";

@@ -2,15 +2,19 @@
 using Soccer.Common.Enums;
 using Soccer.Web.Data.Entities;
 using Soccer.Web.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace Soccer.Web.Helpers
 {
     public interface IUserHelper
     {
-        Task<UserEntity> GetUserByEmailAsync(string email);
+        Task<UserEntity> GetUserAsync(string email);
 
         Task<IdentityResult> AddUserAsync(UserEntity user, string password);
+
+        Task<UserEntity> GetUserAsync(Guid userId);
+
 
         Task CheckRoleAsync(string roleName);
 
@@ -23,5 +27,16 @@ namespace Soccer.Web.Helpers
         Task LogoutAsync();
 
         Task<UserEntity> AddUserAsync(AddUserViewModel model, string path, UserType userType);
+
+        Task<IdentityResult> ChangePasswordAsync(UserEntity user, string oldPassword, string newPassword);
+
+        Task<IdentityResult> UpdateUserAsync(UserEntity user);
+
+        Task<SignInResult> ValidatePasswordAsync(UserEntity user, string password);
+
+        Task<string> GenerateEmailConfirmationTokenAsync(UserEntity user);
+
+        Task<IdentityResult> ConfirmEmailAsync(UserEntity user, string token);
+
     }
 }
