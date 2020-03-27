@@ -12,11 +12,19 @@ namespace Soccer.Prism.ViewModels
     public class SoccerMasterDetailPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
+        private UserResponse _user;
 
         public SoccerMasterDetailPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _navigationService = navigationService;
+            LoadUser();
             LoadMenus();
+        }
+
+        public UserResponse User
+        {
+            get => _user;
+            set => SetProperty(ref _user, value);
         }
 
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
@@ -53,7 +61,7 @@ namespace Soccer.Prism.ViewModels
                 {
                     Icon = "login",
                     PageName = "LoginPage",
-                    Title = Languages.Login
+                    Title = Title = Settings.IsLogin ? Languages.Logout : Languages.Login
                 }
             };
 
@@ -64,6 +72,14 @@ namespace Soccer.Prism.ViewModels
                     PageName = m.PageName,
                     Title = m.Title
                 }).ToList());
+        }
+
+        private void LoadUser()
+        {
+            if (Settings.IsLogin)
+            {
+                User = JsonConvert.DeserializeObject<UserResponse>(Settings.User);
+            }
         }
     }
 }

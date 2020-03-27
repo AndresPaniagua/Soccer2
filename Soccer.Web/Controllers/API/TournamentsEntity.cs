@@ -37,8 +37,8 @@ namespace Soccer.Web.Controllers.API
                 .ThenInclude(g => g.Matches)
                 .ThenInclude(m => m.Visitor)
                 .ToListAsync();
-            return Ok(_converterHelper.ToTournamentResponse(tournaments));
 
+            return Ok(_converterHelper.ToTournamentResponse(tournaments));
         }
     }
 }

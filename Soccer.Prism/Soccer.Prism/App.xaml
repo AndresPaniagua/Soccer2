@@ -11,8 +11,9 @@
 
             <!-- Parameters -->
             <x:String x:Key="UrlAPI">https://soccerweb4-1.azurewebsites.net/</x:String>
-
+            <x:String x:Key="UrlNoImage">https://soccerweb4-1.azurewebsites.net/images/noimage.png</x:String>
             
+
             <!-- Colors -->
             <Color x:Key="ColorBackgroud">#54E85D</Color>
             <Color x:Key="ColorPrimary">#191919</Color>
@@ -33,6 +34,14 @@
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource ColorFont}" />
             </Style>
+            
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorFontInverse}" />
+            </Style>
+
+            <Style TargetType="Picker">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorFontInverse}" />
+            </Style>
 
             <Style x:Key="SecondaryButton" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorSecondary}" />
@@ -40,10 +49,10 @@
 
             <Style x:Key="DangerButton" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorDanger}" />
+                <Setter Property="TextColor" Value="{StaticResource ColorFont}" />
             </Style>
 
             
-
             <!-- Data Templates -->
             <DataTemplate x:Key="MatchTemplate">
                 <StackLayout>

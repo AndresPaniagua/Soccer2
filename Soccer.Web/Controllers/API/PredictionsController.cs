@@ -24,7 +24,7 @@ namespace Soccer.Web.Controllers.API
         private readonly IConverterHelper _converterHelper;
         private readonly IUserHelper _userHelper;
 
-        public PredictionsController(DataContext context, 
+        public PredictionsController(DataContext context,
             IConverterHelper converterHelper,
             IUserHelper userHelper)
         {
@@ -235,7 +235,7 @@ namespace Soccer.Web.Controllers.API
 
             List<PositionResponse> list = positionResponses.OrderByDescending(pr => pr.Points).ToList();
             int i = 1;
-            foreach (var item in list)
+            foreach (PositionResponse item in list)
             {
                 item.Ranking = i;
                 i++;

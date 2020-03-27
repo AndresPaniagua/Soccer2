@@ -1,17 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
 using Soccer.Common.Enums;
 using Soccer.Common.Models;
 using Soccer.Web.Data;
 using Soccer.Web.Data.Entities;
 using Soccer.Web.Helpers;
-using System.Globalization;
 using Soccer.Web.Resources;
-using System.Net;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Soccer.Web.Controllers.API
 {
@@ -218,7 +217,7 @@ namespace Soccer.Web.Controllers.API
             IdentityResult result = await _userHelper.ChangePasswordAsync(user, request.OldPassword, request.NewPassword);
             if (!result.Succeeded)
             {
-                var message = result.Errors.FirstOrDefault().Description;
+                string message = result.Errors.FirstOrDefault().Description;
                 return BadRequest(new Response
                 {
                     IsSuccess = false,

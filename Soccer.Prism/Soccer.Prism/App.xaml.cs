@@ -29,6 +29,7 @@ namespace Soccer.Prism
         {
             containerRegistry.Register<IApiService, ApiService>();
             containerRegistry.Register<ITransformHelper, TransformHelper>();
+            containerRegistry.Register<IRegexHelper, RegexHelper>();
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<TournamentsPage, TournamentsPageViewModel>();
             containerRegistry.RegisterForNavigation<GroupsPage, GroupsPageViewModel>();
@@ -42,6 +43,7 @@ namespace Soccer.Prism
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<MyPositionsPage, MyPositionsPageViewModel>();
             containerRegistry.RegisterForNavigation<MyPredictionsPage, MyPredictionsPageViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
         }
     }
 }

@@ -32,8 +32,6 @@ namespace Soccer.Web.Data
             await CheckPreditionsAsync();
         }
 
-
-
         private async Task CheckUsersAsync()
         {
             for (int i = 1; i <= 100; i++)
@@ -41,7 +39,6 @@ namespace Soccer.Web.Data
                 await CheckUserAsync($"100{i}", "User", $"{i}", $"user{i}@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
             }
         }
-
 
         private async Task CheckTeamsAsync()
         {
@@ -613,10 +610,6 @@ namespace Soccer.Web.Data
             }
         }
 
-
-
-
-
         private async Task CheckPreditionsAsync()
         {
             if (!_context.Predictions.Any())
@@ -689,7 +682,6 @@ namespace Soccer.Web.Data
             await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
             await _userHelper.CheckRoleAsync(UserType.User.ToString());
         }
-
 
     }
 }

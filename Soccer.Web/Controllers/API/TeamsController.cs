@@ -21,13 +21,11 @@ namespace Soccer.Web.Controllers.API
             _context = context;
         }
 
-
         [HttpGet]
         public IEnumerable<TeamEntity> GetTeams()
         {
             return _context.Teams.OrderBy(t => t.Name);
         }
-
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTeamEntity([FromRoute] int id)
@@ -47,6 +45,5 @@ namespace Soccer.Web.Controllers.API
             return Ok(teamEntity);
         }
 
-        
     }
 }

@@ -166,6 +166,5 @@ namespace Soccer.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
     }
 }

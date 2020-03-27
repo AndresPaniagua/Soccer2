@@ -20,7 +20,6 @@ namespace Soccer.Web.Data
                 .IsUnique();
         }
 
-
         public DbSet<GroupDetailEntity> GroupDetails { get; set; }
 
         public DbSet<GroupEntity> Groups { get; set; }

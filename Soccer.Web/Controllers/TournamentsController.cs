@@ -36,7 +36,6 @@ namespace Soccer.Web.Controllers
             _matchHelper = matchHelper;
         }
 
-
         public async Task<IActionResult> Index()
         {
             return View(await _context
@@ -45,7 +44,6 @@ namespace Soccer.Web.Controllers
                 .OrderBy(t => t.StartDate)
                 .ToListAsync());
         }
-
 
         public IActionResult Create()
         {
@@ -73,8 +71,6 @@ namespace Soccer.Web.Controllers
 
             return View(model);
         }
-
-
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -115,8 +111,6 @@ namespace Soccer.Web.Controllers
             return View(model);
         }
 
-
-
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,8 +129,6 @@ namespace Soccer.Web.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -163,8 +155,6 @@ namespace Soccer.Web.Controllers
             return View(tournamentEntity);
         }
 
-
-
         public async Task<IActionResult> AddGroup(int? id)
         {
             if (id == null)
@@ -187,7 +177,6 @@ namespace Soccer.Web.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddGroup(GroupViewModel model)
@@ -202,7 +191,6 @@ namespace Soccer.Web.Controllers
 
             return View(model);
         }
-
 
         //public async Task<IActionResult> AddGroup2(int? id)
         //{
@@ -230,10 +218,6 @@ namespace Soccer.Web.Controllers
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction($"{nameof(Details)}/{groupEntity.Tournament.Id}");
         //}
-
-
-
-
 
         public async Task<IActionResult> EditGroup(int? id)
         {
@@ -269,7 +253,6 @@ namespace Soccer.Web.Controllers
             return View(model);
         }
 
-
         public async Task<IActionResult> DeleteGroup(int? id)
         {
             if (id == null)
@@ -289,7 +272,6 @@ namespace Soccer.Web.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction($"{nameof(Details)}/{groupEntity.Tournament.Id}");
         }
-
 
         public async Task<IActionResult> DetailsGroup(int? id)
         {
@@ -314,7 +296,6 @@ namespace Soccer.Web.Controllers
 
             return View(groupEntity);
         }
-
 
         public async Task<IActionResult> AddGroupDetail(int? id)
         {
@@ -437,7 +418,6 @@ namespace Soccer.Web.Controllers
             return View(model);
         }
 
-
         public async Task<IActionResult> EditMatch(int? id)
         {
             if (id == null)
@@ -473,7 +453,6 @@ namespace Soccer.Web.Controllers
 
             return View(model);
         }
-
 
         public async Task<IActionResult> DeleteGroupDetail(int? id)
         {
@@ -514,13 +493,6 @@ namespace Soccer.Web.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction($"{nameof(DetailsGroup)}/{matchEntity.Group.Id}");
         }
-
-
-
-
-
-
-
 
         public async Task<IActionResult> CloseMatch(int? id)
         {
@@ -568,7 +540,6 @@ namespace Soccer.Web.Controllers
             model.Visitor = await _context.Teams.FindAsync(model.VisitorId);
             return View(model);
         }
-
 
     }
 }
