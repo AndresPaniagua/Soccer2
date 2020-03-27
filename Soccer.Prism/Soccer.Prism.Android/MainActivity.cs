@@ -4,6 +4,10 @@ using Android.OS;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.Droid;
+using Android.Runtime;
+using Plugin.CurrentActivity;
+using Plugin.Permissions;
+
 
 namespace Soccer.Prism.Droid
 {
@@ -21,12 +25,19 @@ namespace Soccer.Prism.Droid
 
             base.OnCreate(bundle);
 
+            CrossCurrentActivity.Current.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             new SfBusyIndicatorRenderer();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             LoadApplication(new App(new AndroidInitializer()));
         }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
+
 
     public class AndroidInitializer : IPlatformInitializer
     {
