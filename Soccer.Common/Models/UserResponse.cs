@@ -20,6 +20,11 @@ namespace Soccer.Common.Models
 
         public string PicturePath { get; set; }
 
+        public string PictureFullPath => string.IsNullOrEmpty(PicturePath)
+            ? "https://soccerweb4-1.azurewebsites.net//images/noimage.png"
+            : $"https://soccerweb4-1.azurewebsites.net{PicturePath.Substring(1)}";
+
+
         public UserType UserType { get; set; }
 
         public TeamResponse Team { get; set; }

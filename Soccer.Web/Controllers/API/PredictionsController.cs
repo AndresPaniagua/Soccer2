@@ -100,9 +100,6 @@ namespace Soccer.Web.Controllers.API
             return Ok(predictionResponses.OrderBy(pr => pr.Id).ThenBy(pr => pr.Match.Date));
         }
 
-
-
-
         [HttpPost]
         public async Task<IActionResult> PostPrediction([FromBody] PredictionRequest request)
         {
@@ -162,12 +159,6 @@ namespace Soccer.Web.Controllers.API
             return NoContent();
         }
 
-
-
-
-
-
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPositionsByTournament([FromRoute] int id)
         {
@@ -223,6 +214,35 @@ namespace Soccer.Web.Controllers.API
             return Ok(list);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetPositions()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            List<UserEntity> users = await _context.Users
+                .Include(u => u.Team)
+                .Include(u => u.Predictions)
+                .ToListAsync();
+            List<PositionResponse> positionResponses = users.Select(u => new PositionResponse
+            {
+                Points = u.Points,
+                UserResponse = _converterHelper.ToUserResponse(u)
+
+            }).ToList();
+
+            List<PositionResponse> list = positionResponses.OrderByDescending(pr => pr.Points).ToList();
+            int i = 1;
+            foreach (var item in list)
+            {
+                item.Ranking = i;
+                i++;
+            }
+
+            return Ok(list);
+        }
 
     }
 }

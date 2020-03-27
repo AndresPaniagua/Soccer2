@@ -23,7 +23,6 @@ namespace Soccer.Web
 
         public IConfiguration Configuration { get; }
 
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -85,7 +84,6 @@ namespace Soccer.Web
 
         }
 
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -109,7 +107,9 @@ namespace Soccer.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
             });
         }
+
     }
 }

@@ -51,7 +51,6 @@ namespace Soccer.Web.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -74,19 +73,16 @@ namespace Soccer.Web.Controllers
             return View(model);
         }
 
-
         public async Task<IActionResult> Logout()
         {
             await _userHelper.LogoutAsync();
             return RedirectToAction("Index", "Home");
         }
 
-
         public IActionResult NotAuthorized()
         {
             return View();
         }
-
 
         public IActionResult Register()
         {
@@ -97,7 +93,6 @@ namespace Soccer.Web.Controllers
 
             return View(model);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -143,7 +138,6 @@ namespace Soccer.Web.Controllers
             return View(model);
 
         }
-
 
         public async Task<IActionResult> ChangeUser()
         {
@@ -196,14 +190,13 @@ namespace Soccer.Web.Controllers
             return View(model);
         }
 
-
-        public IActionResult ChangePassword()
+        public IActionResult ChangePasswordMVC()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<IActionResult> ChangePasswordMVC(ChangePasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -223,7 +216,6 @@ namespace Soccer.Web.Controllers
 
             return View(model);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateToken([FromBody] LoginViewModel model)
@@ -265,7 +257,6 @@ namespace Soccer.Web.Controllers
             return BadRequest();
         }
 
-
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
@@ -288,17 +279,13 @@ namespace Soccer.Web.Controllers
             return View();
         }
 
-
-
-
-
-        public IActionResult RecoverPassword()
+        public IActionResult RecoverPasswordMVC()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> RecoverPassword(RecoverPasswordViewModel model)
+        public async Task<IActionResult> RecoverPasswordMVC(RecoverPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -324,7 +311,6 @@ namespace Soccer.Web.Controllers
 
             return View(model);
         }
-
 
         public IActionResult ResetPassword(string token)
         {

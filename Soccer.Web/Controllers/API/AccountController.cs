@@ -110,10 +110,6 @@ namespace Soccer.Web.Controllers.API
             });
         }
 
-
-
-
-
         [HttpPost]
         [Route("RecoverPassword")]
         public async Task<IActionResult> RecoverPassword([FromBody] EmailRequest request)
@@ -149,9 +145,6 @@ namespace Soccer.Web.Controllers.API
                 Message = Resource.RecoverPasswordMessage
             });
         }
-
-
-
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
@@ -193,9 +186,6 @@ namespace Soccer.Web.Controllers.API
 
             return NoContent();
         }
-
-
-
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
@@ -243,9 +233,6 @@ namespace Soccer.Web.Controllers.API
             });
         }
 
-
-
-
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("GetUserByEmail")]
@@ -267,7 +254,6 @@ namespace Soccer.Web.Controllers.API
 
             return Ok(_converterHelper.ToUserResponse(userEntity));
         }
-
 
     }
 }
