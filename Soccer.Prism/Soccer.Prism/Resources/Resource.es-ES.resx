@@ -196,7 +196,7 @@
     <value>Registrar</value>
   </data>
   <data name="LoginError" xml:space="preserve">
-    <value>El nombre de usuario o clave es incorrecta.</value>
+    <value>El nombre de usuario o clave es incorrecta</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Cerrar sesión</value>
@@ -259,7 +259,7 @@
     <value>Confirmar contraseña</value>
   </data>
   <data name="PasswordConfirmError1" xml:space="preserve">
-    <value>Debes ingresar una contraseña</value>
+    <value>Debes ingresar una clave</value>
   </data>
   <data name="PasswordConfirmError2" xml:space="preserve">
     <value>La nueva contraseña y la confirmación de contraseña no son iguales.</value>
@@ -281,5 +281,80 @@
   </data>
   <data name="FromGallery" xml:space="preserve">
     <value>De la galería</value>
+  </data>
+  <data name="PasswordRecover" xml:space="preserve">
+    <value>Recuperar la clave</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>¿Ha olvidado la clave?</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Cambiar clave</value>
+  </data>
+  <data name="UserUpdated" xml:space="preserve">
+    <value>El usuario se actualizó correctamente</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Confirmar nueva clave</value>
+  </data>
+  <data name="ConfirmNewPasswordError" xml:space="preserve">
+    <value>Debe ingresar una confirmación para la clave</value>
+  </data>
+  <data name="ConfirmNewPasswordError2" xml:space="preserve">
+    <value>La confirmación y la nueva claveno coinciden</value>
+  </data>
+  <data name="ConfirmNewPasswordPlaceHolder" xml:space="preserve">
+    <value>Escriba la confirmación de su clave</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Clave actual</value>
+  </data>
+  <data name="CurrentPasswordError" xml:space="preserve">
+    <value>Debe introducir su clave actual</value>
+  </data>
+  <data name="CurrentPasswordPlaceHolder" xml:space="preserve">
+    <value>Escriba la clave actual</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nueva clave</value>
+  </data>
+  <data name="NewPasswordError" xml:space="preserve">
+    <value>Debe especificar una nueva clave</value>
+  </data>
+  <data name="NewPasswordPlaceHolder" xml:space="preserve">
+    <value>Escribe la nueva clave</value>
+  </data>
+  <data name="SelectTournament" xml:space="preserve">
+    <value>Selecciona un torneo</value>
+  </data>
+  <data name="PredictionsFor" xml:space="preserve">
+    <value>Pronósticos para</value>
+  </data>
+  <data name="IsUpdated" xml:space="preserve">
+    <value>Listo?</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="LocalGoalsError" xml:space="preserve">
+    <value>Debe ingresar los goles del local.</value>
+  </data>
+  <data name="VisitorGoalsError" xml:space="preserve">
+    <value>Debe ingresar los goles del visitante.</value>
+  </data>
+  <data name="MatchAlreadyStarts" xml:space="preserve">
+    <value>No puedes grabar la predicción porque la partida ya ha comenzado.</value>
+  </data>
+  <data name="Real" xml:space="preserve">
+    <value>Real</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Puntos</value>
+  </data>
+  <data name="Prediction" xml:space="preserve">
+    <value>Predicción</value>
   </data>
 </root>

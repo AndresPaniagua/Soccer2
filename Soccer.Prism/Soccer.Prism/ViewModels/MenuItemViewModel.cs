@@ -1,7 +1,7 @@
-﻿using Soccer.Common.Models;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Navigation;
 using Soccer.Common.Helpers;
+using Soccer.Common.Models;
 
 namespace Soccer.Prism.ViewModels
 {
@@ -26,7 +26,14 @@ namespace Soccer.Prism.ViewModels
                 Settings.Token = null;
             }
 
-            await _navigationService.NavigateAsync($"/SoccerMasterDetailPage/NavigationPage/{PageName}");
+            if (IsLoginRequired && !Settings.IsLogin)
+            {
+                await _navigationService.NavigateAsync($"/SoccerMasterDetailPage/NavigationPage/LoginPage");
+            }
+            else
+            {
+                await _navigationService.NavigateAsync($"/SoccerMasterDetailPage/NavigationPage/{PageName}");
+            }
         }
     }
 }
