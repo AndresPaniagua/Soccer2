@@ -1,11 +1,6 @@
-﻿using Newtonsoft.Json;
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Navigation;
-using Soccer.Common.Helpers;
+﻿using Prism.Navigation;
 using Soccer.Common.Models;
 using Soccer.Prism.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,7 +15,6 @@ namespace Soccer.Prism.ViewModels
             : base(navigationService)
         {
             Title = Languages.Open;
-            LoadMatches();
         }
 
         public List<MatchResponse> Matches
@@ -33,21 +27,16 @@ namespace Soccer.Prism.ViewModels
         {
             base.OnNavigatedTo(parameters);
 
-            _tournament = parameters.GetValue<TournamentResponse>("tournament");
-            List<MatchResponse> matches = new List<MatchResponse>();
-            foreach (GroupResponse group in _tournament.Groups)
+            if (parameters.ContainsKey("tournament"))
             {
-                matches.AddRange(group.Matches);
+                _tournament = parameters.GetValue<TournamentResponse>("tournament");
+                LoadMatches();
             }
 
-            Matches = matches.Where(m => !m.IsClosed).OrderBy(m => m.Date).ToList();
         }
-
-
 
         private void LoadMatches()
         {
-            _tournament = JsonConvert.DeserializeObject<TournamentResponse>(Settings.Tournament);
             List<MatchResponse> matches = new List<MatchResponse>();
             foreach (GroupResponse group in _tournament.Groups)
             {
@@ -56,7 +45,6 @@ namespace Soccer.Prism.ViewModels
 
             Matches = matches.Where(m => !m.IsClosed).OrderBy(m => m.Date).ToList();
         }
-
 
     }
 }

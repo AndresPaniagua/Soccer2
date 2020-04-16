@@ -45,6 +45,5 @@ namespace Soccer.Prism.ViewModels
 
         }
 
-
     }
 }
