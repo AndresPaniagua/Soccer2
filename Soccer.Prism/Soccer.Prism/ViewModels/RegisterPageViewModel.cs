@@ -6,7 +6,6 @@ using Soccer.Common.Helpers;
 using Soccer.Common.Models;
 using Soccer.Common.Services;
 using Soccer.Prism.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -29,7 +28,7 @@ namespace Soccer.Prism.ViewModels
         private DelegateCommand _registerCommand;
         private MediaFile _file;
         private DelegateCommand _changeImageCommand;
-        private IFilesHelper _filesHelper;
+        private readonly IFilesHelper _filesHelper;
 
         public RegisterPageViewModel(
             INavigationService navigationService,
@@ -98,7 +97,7 @@ namespace Soccer.Prism.ViewModels
             IsRunning = true;
             IsEnabled = false;
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
+            bool connection = _apiService.CheckConnection();
             if (!connection)
             {
                 IsRunning = false;
@@ -199,7 +198,7 @@ namespace Soccer.Prism.ViewModels
         private async void LoadTeamsAsync()
         {
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
+            bool connection = _apiService.CheckConnection();
             if (!connection)
             {
                 IsRunning = false;

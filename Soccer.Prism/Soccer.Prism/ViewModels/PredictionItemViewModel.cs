@@ -30,7 +30,7 @@ namespace Soccer.Prism.ViewModels
             }
 
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
+            bool connection = _apiService.CheckConnection();
             if (!connection)
             {
                 await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.ConnectionError, Languages.Accept);

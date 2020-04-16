@@ -48,7 +48,7 @@ namespace Soccer.Prism.ViewModels
         public async void ReloadUser()
         {
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
+            bool connection = _apiService.CheckConnection();
             if (!connection)
             {
                 return;

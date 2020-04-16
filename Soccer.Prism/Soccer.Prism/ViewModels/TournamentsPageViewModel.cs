@@ -36,12 +36,11 @@ namespace Soccer.Prism.ViewModels
             set => SetProperty(ref _isRunning, value);
         }
 
-
         private async void LoadTournamentsAsync()
         {
             IsRunning = true;
-            var url = App.Current.Resources["UrlAPI"].ToString();
-            var connection = await _apiService.CheckConnectionAsync(url);
+            string url = App.Current.Resources["UrlAPI"].ToString();
+            bool connection = _apiService.CheckConnection();
             if (!connection)
             {
                 IsRunning = false;

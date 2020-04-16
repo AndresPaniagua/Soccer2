@@ -3,16 +3,16 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
-using System.Threading.Tasks;
 using Soccer.Common.Helpers;
 using Soccer.Common.Models;
-using Soccer.Prism.Helpers;
-using Xamarin.Forms;
-using System.Collections.ObjectModel;
 using Soccer.Common.Services;
-using System.Collections.Generic;
-using System.Linq;
+using Soccer.Prism.Helpers;
 using Soccer.Prism.Views;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Soccer.Prism.ViewModels
 {
@@ -33,7 +33,7 @@ namespace Soccer.Prism.ViewModels
         private DelegateCommand _changePasswordCommand;
 
         public ModifyUserPageViewModel(INavigationService navigationService,
-            IFilesHelper filesHelper, 
+            IFilesHelper filesHelper,
             IApiService apiService)
             : base(navigationService)
         {
@@ -91,7 +91,7 @@ namespace Soccer.Prism.ViewModels
 
         private async void SaveAsync()
         {
-            var isValid = await ValidateDataAsync();
+            bool isValid = await ValidateDataAsync();
             if (!isValid)
             {
                 return;
@@ -223,7 +223,7 @@ namespace Soccer.Prism.ViewModels
             IsRunning = true;
             IsEnabled = false;
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
+            bool connection = _apiService.CheckConnection();
             if (!connection)
             {
                 IsRunning = false;

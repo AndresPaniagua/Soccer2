@@ -20,8 +20,8 @@ namespace Soccer.Prism.ViewModels
         private DelegateCommand _registerCommand;
         private DelegateCommand _forgotPasswordCommand;
 
-        public LoginPageViewModel(INavigationService navigationService, 
-            IApiService apiService) 
+        public LoginPageViewModel(INavigationService navigationService,
+            IApiService apiService)
             : base(navigationService)
         {
             _navigationService = navigationService;
@@ -80,7 +80,7 @@ namespace Soccer.Prism.ViewModels
             IsEnabled = false;
 
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
+            bool connection = _apiService.CheckConnection();
             if (!connection)
             {
                 IsRunning = true;

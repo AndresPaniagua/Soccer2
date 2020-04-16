@@ -47,7 +47,7 @@ namespace Soccer.Prism.ViewModels
         {
             IsRunning = true;
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
+            bool connection = _apiService.CheckConnection();
             if (!connection)
             {
                 IsRunning = false;
