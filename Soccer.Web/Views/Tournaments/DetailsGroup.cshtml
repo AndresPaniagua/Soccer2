@@ -43,7 +43,7 @@
         <div class="col-md-4">
             @if (!string.IsNullOrEmpty(Model.Tournament.LogoPath))
             {
-                <img src="@Url.Content(Model.Tournament.LogoPath)" alt="Image" style="width:150px;height:150px;max-width: 100%; height: auto;" />
+                <img src="@Model.Tournament.LogoFullPath" style="width:150px;height:150px;max-width:200%; height: auto;" />
             }
         </div>
     </div>
@@ -103,15 +103,15 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model.GroupDetails
-                         .OrderByDescending(g => g.Points)
-                         .ThenByDescending(g => g.GoalDifference)
-                         .ThenByDescending(g => g.GoalsFor))
+                     .OrderByDescending(g => g.Points)
+                     .ThenByDescending(g => g.GoalDifference)
+                     .ThenByDescending(g => g.GoalsFor))
                             {
                                 <tr>
                                     <td>
                                         @if (!string.IsNullOrEmpty(item.Team.LogoPath))
                                         {
-                                            <img src="@Url.Content(item.Team.LogoPath)" alt="Image" style="width:50px;height:50px;max-width: 100%; height: auto;" />
+                                            <img src="@item.Team.LogoFullPath" style="width:50px;height:50px;max-width: 100%; height: auto;" />
                                         }
                                     </td>
                                     <td>
@@ -190,8 +190,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.GroupDetails.FirstOrDefault().Group.Matches
-                         .OrderBy(m => m.Date))
+                            @foreach (var item in Model.GroupDetails.FirstOrDefault().Group.Matches.OrderBy(m => m.Date))
                             {
                                 <tr>
                                     <td>
@@ -200,7 +199,7 @@
                                     <td>
                                         @if (!string.IsNullOrEmpty(item.Local.LogoPath))
                                         {
-                                            <img src="@Url.Content(item.Local.LogoPath)" alt="Image" style="width:50px;height:50px;max-width: 100%; height: auto;" />
+                                            <img src="@item.Local.LogoFullPath" style="width:50px;height:50px;max-width: 100%; height: auto;" />
                                         }
                                     </td>
                                     <td>
@@ -212,7 +211,7 @@
                                     <td>
                                         @if (!string.IsNullOrEmpty(item.Visitor.LogoPath))
                                         {
-                                            <img src="@Url.Content(item.Visitor.LogoPath)" alt="Image" style="width:50px;height:50px;max-width: 100%; height: auto;" />
+                                            <img src="@item.Visitor.LogoFullPath" style="width:50px;height:50px;max-width: 100%; height: auto;" />
                                         }
                                     </td>
                                     <td>

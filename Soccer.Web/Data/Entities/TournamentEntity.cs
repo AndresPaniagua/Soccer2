@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Soccer.Web.Data.Entities
 {
@@ -43,7 +41,7 @@ namespace Soccer.Web.Data.Entities
 
         public string LogoFullPath => string.IsNullOrEmpty(LogoPath)
                 ? "https://soccerweb4-1.azurewebsites.net//images/noimage.png"
-                : $"https://soccerweb4-1.azurewebsites.net{LogoPath.Substring(1)}";
+                : $"https://panisoccer.blob.core.windows.net/tournaments/{LogoPath}";
 
 
         public TournamentEntity Tournament { get; set; }

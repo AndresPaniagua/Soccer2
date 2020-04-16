@@ -15,25 +15,23 @@ namespace Soccer.Web.Controllers
     public class TournamentsController : Controller
     {
         private readonly DataContext _context;
-        private readonly IImageHelper _imageHelper;
         private readonly IConverterHelper _converterHelper;
         private readonly IMatchHelper _matchHelper;
-
-        public ICombosHelper _combosHelper { get; }
+        private readonly IBlobHelper _blobHelper;
+        private readonly ICombosHelper _combosHelper;
 
         public TournamentsController(
             DataContext context,
-            IImageHelper imageHelper,
             IConverterHelper converterHelper,
             ICombosHelper combosHelper,
-            IMatchHelper matchHelper
-            )
+            IMatchHelper matchHelper,
+            IBlobHelper blobHelper)
         {
             _context = context;
-            _imageHelper = imageHelper;
             _converterHelper = converterHelper;
             _combosHelper = combosHelper;
             _matchHelper = matchHelper;
+            _blobHelper = blobHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -60,7 +58,7 @@ namespace Soccer.Web.Controllers
 
                 if (model.LogoFile != null)
                 {
-                    path = await _imageHelper.UploadImageAsync(model.LogoFile, "Tournaments");
+                    path = await _blobHelper.UploadBlobAsync(model.LogoFile, "tournaments");
                 }
 
                 TournamentEntity tournament = _converterHelper.ToTournamentEntity(model, path, true);
@@ -99,7 +97,7 @@ namespace Soccer.Web.Controllers
 
                 if (model.LogoFile != null)
                 {
-                    path = await _imageHelper.UploadImageAsync(model.LogoFile, "Tournaments");
+                    path = await _blobHelper.UploadBlobAsync(model.LogoFile, "tournaments");
                 }
 
                 TournamentEntity tournamentEntity = _converterHelper.ToTournamentEntity(model, path, false);
@@ -390,7 +388,7 @@ namespace Soccer.Web.Controllers
                 return NotFound();
             }
 
-            var groupDetailEntity = await _context.GroupDetails
+            GroupDetailEntity groupDetailEntity = await _context.GroupDetails
                 .Include(gd => gd.Group)
                 .Include(gd => gd.Team)
                 .FirstOrDefaultAsync(gd => gd.Id == id);
@@ -399,7 +397,7 @@ namespace Soccer.Web.Controllers
                 return NotFound();
             }
 
-            var model = _converterHelper.ToGroupDetailViewModel(groupDetailEntity);
+            GroupDetailViewModel model = _converterHelper.ToGroupDetailViewModel(groupDetailEntity);
             return View(model);
         }
 
@@ -409,7 +407,7 @@ namespace Soccer.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var groupDetailEntity = await _converterHelper.ToGroupDetailEntityAsync(model, false);
+                GroupDetailEntity groupDetailEntity = await _converterHelper.ToGroupDetailEntityAsync(model, false);
                 _context.Update(groupDetailEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction($"{nameof(DetailsGroup)}/{model.GroupId}");
@@ -425,7 +423,7 @@ namespace Soccer.Web.Controllers
                 return NotFound();
             }
 
-            var matchEntity = await _context.Matches
+            MatchEntity matchEntity = await _context.Matches
                 .Include(m => m.Group)
                 .Include(m => m.Local)
                 .Include(m => m.Visitor)
@@ -435,7 +433,7 @@ namespace Soccer.Web.Controllers
                 return NotFound();
             }
 
-            var model = _converterHelper.ToMatchViewModel(matchEntity);
+            MatchViewModel model = _converterHelper.ToMatchViewModel(matchEntity);
             return View(model);
         }
 
@@ -445,7 +443,7 @@ namespace Soccer.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var matchEntity = await _converterHelper.ToMatchEntityAsync(model, false);
+                MatchEntity matchEntity = await _converterHelper.ToMatchEntityAsync(model, false);
                 _context.Update(matchEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction($"{nameof(DetailsGroup)}/{model.GroupId}");
@@ -461,7 +459,7 @@ namespace Soccer.Web.Controllers
                 return NotFound();
             }
 
-            var groupDetailEntity = await _context.GroupDetails
+            GroupDetailEntity groupDetailEntity = await _context.GroupDetails
                 .Include(gd => gd.Group)
                 .FirstOrDefaultAsync(gd => gd.Id == id);
             if (groupDetailEntity == null)
@@ -481,7 +479,7 @@ namespace Soccer.Web.Controllers
                 return NotFound();
             }
 
-            var matchEntity = await _context.Matches
+            MatchEntity matchEntity = await _context.Matches
                 .Include(m => m.Group)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (matchEntity == null)
@@ -501,7 +499,7 @@ namespace Soccer.Web.Controllers
                 return NotFound();
             }
 
-            var matchEntity = await _context.Matches
+            MatchEntity matchEntity = await _context.Matches
                 .Include(m => m.Group)
                 .Include(m => m.Local)
                 .Include(m => m.Visitor)
@@ -511,7 +509,7 @@ namespace Soccer.Web.Controllers
                 return NotFound();
             }
 
-            var model = new CloseMatchViewModel
+            CloseMatchViewModel model = new CloseMatchViewModel
             {
                 Group = matchEntity.Group,
                 GroupId = matchEntity.Group.Id,

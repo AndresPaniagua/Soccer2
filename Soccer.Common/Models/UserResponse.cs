@@ -22,7 +22,7 @@ namespace Soccer.Common.Models
 
         public string PictureFullPath => string.IsNullOrEmpty(PicturePath)
             ? "https://soccerweb4-1.azurewebsites.net//images/noimage.png"
-            : $"https://soccerweb4-1.azurewebsites.net{PicturePath.Substring(1)}";
+            : $"https://panisoccer.blob.core.windows.net/users/{PicturePath}";
 
 
         public UserType UserType { get; set; }

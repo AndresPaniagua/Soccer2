@@ -3,6 +3,7 @@ using Soccer.Web.Data.Entities;
 using Soccer.Web.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,14 +12,19 @@ namespace Soccer.Web.Data
     public class SeedDb
     {
         private readonly DataContext _context;
-
         private readonly IUserHelper _userHelper;
+        private readonly IBlobHelper _blobHelper;
+        private readonly Random _random;
 
-        public SeedDb(DataContext context,
-            IUserHelper userHelper)
+        public SeedDb(
+            DataContext context,
+            IUserHelper userHelper,
+            IBlobHelper blobHelper)
         {
             _context = context;
             _userHelper = userHelper;
+            _blobHelper = blobHelper;
+            _random = new Random();
         }
 
         public async Task SeedAsync()
@@ -27,65 +33,169 @@ namespace Soccer.Web.Data
             await CheckRolesAsync();
             await CheckTeamsAsync();
             await CheckTournamentsAsync();
-            await CheckUserAsync("1010", "Juan", "Zuluaga", "jzuluaga55@gmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Admin);
+            await CheckUserAsync("1409", "Andres", "Paniagua", "andresfelipep.l14@gmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Admin, "Pani.jpg");
             await CheckUsersAsync();
             await CheckPreditionsAsync();
         }
 
         private async Task CheckUsersAsync()
         {
-            for (int i = 1; i <= 100; i++)
+            List<Photo> photos = LoadPhotos();
+            int i = 0;
+            foreach (Photo photo in photos)
             {
-                await CheckUserAsync($"100{i}", "User", $"{i}", $"user{i}@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
+                i++;
+                await CheckUserAsync($"100{i}", photo.Firstname, photo.Lastname, $"user{i}@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User, photo.Image);
             }
+        }
+
+        private List<Photo> LoadPhotos()
+        {
+            return new List<Photo>
+            {
+                new Photo { Firstname = "Alexandra", Lastname = "Samir", Image = "Alexandra.jpg" },
+                new Photo { Firstname = "Andrea", Lastname = "Lopez", Image = "Andrea.jpg" },
+                new Photo { Firstname = "Andres", Lastname = "Cardona", Image = "Andres.jpg" },
+                new Photo { Firstname = "Angelica", Lastname = "Echavarria", Image = "Angelica.jpg" },
+                new Photo { Firstname = "Camila", Lastname = "Sanchez", Image = "Camila.jpg" },
+                new Photo { Firstname = "Camilo", Lastname = "Medez", Image = "Camilo.jpg" },
+                new Photo { Firstname = "Daniela", Lastname = "Smith", Image = "Daniela.jpg" },
+                new Photo { Firstname = "Diana", Lastname = "Rogers", Image = "Diana.jpg" },
+                new Photo { Firstname = "Elizabeth", Lastname = "Zuluaga", Image = "Elizabeth.jpg" },
+                new Photo { Firstname = "Jennifer", Lastname = "Zapata", Image = "Jennifer.jpg" },
+                new Photo { Firstname = "Laura", Lastname = "Rodriguez", Image = "Laura.jpg" },
+                new Photo { Firstname = "Melissa", Lastname = "Ateortua", Image = "Melissa.jpg" },
+                new Photo { Firstname = "Natalia", Lastname = "Bedoya", Image = "Natalia.jpg" }
+            };
+        }
+
+        private async Task CheckPreditionsAsync()
+        {
+            if (!_context.Predictions.Any())
+            {
+                foreach (UserEntity user in _context.Users)
+                {
+                    if (user.UserType == UserType.User)
+                    {
+                        AddPrediction(user);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private void AddPrediction(UserEntity user)
+        {
+            foreach (MatchEntity match in _context.Matches)
+            {
+                _context.Predictions.Add(new PredictionEntity
+                {
+                    GoalsLocal = _random.Next(0, 5),
+                    GoalsVisitor = _random.Next(0, 5),
+                    Match = match,
+                    User = user
+                });
+            }
+        }
+
+        private async Task<UserEntity> CheckUserAsync(
+            string document,
+            string firstName,
+            string lastName,
+            string email,
+            string phone,
+            string address,
+            UserType userType,
+            string image)
+        {
+            UserEntity user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\images\\Users", image);
+                string imageId = await _blobHelper.UploadBlobAsync(path, "users");
+
+                int totalTeams = _context.Teams.Count();
+                int random = _random.Next(1, _context.Teams.Count());
+                TeamEntity team = _context.Teams.FirstOrDefault(t => t.Id == random);
+
+                user = new UserEntity
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    UserName = email,
+                    PhoneNumber = phone,
+                    Address = address,
+                    Document = document,
+                    Team = team,
+                    UserType = userType,
+                    PicturePath = imageId
+                };
+
+                await _userHelper.AddUserAsync(user, "123456");
+                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+
+                string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                await _userHelper.ConfirmEmailAsync(user, token);
+            }
+
+            return user;
+        }
+
+        private async Task CheckRolesAsync()
+        {
+            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
+            await _userHelper.CheckRoleAsync(UserType.User.ToString());
         }
 
         private async Task CheckTeamsAsync()
         {
             if (!_context.Teams.Any())
             {
-                AddTeam("Ajax");
-                AddTeam("America");
-                AddTeam("Argentina");
-                AddTeam("Barcelona");
-                AddTeam("Bayer Leverkusen");
-                AddTeam("Bolivia");
-                AddTeam("Borussia Dortmund");
-                AddTeam("Brasil");
-                AddTeam("Bucaramanga");
-                AddTeam("Canada");
-                AddTeam("Chelsea");
-                AddTeam("Chile");
-                AddTeam("Colombia");
-                AddTeam("Costa Rica");
-                AddTeam("Ecuador");
-                AddTeam("Honduras");
-                AddTeam("Inter Milan");
-                AddTeam("Junior");
-                AddTeam("Juventus");
-                AddTeam("Liverpool");
-                AddTeam("Medellin");
-                AddTeam("Mexico");
-                AddTeam("Millonarios");
-                AddTeam("Nacional");
-                AddTeam("Once Caldas");
-                AddTeam("Panama");
-                AddTeam("Paraguay");
-                AddTeam("Peru");
-                AddTeam("PSG");
-                AddTeam("Real Madrid");//
-                AddTeam("Santa Fe");
-                AddTeam("Uruguay");
-                AddTeam("USA");
-                AddTeam("Venezuela");
-
+                await AddTeamAsync("Ajax");
+                await AddTeamAsync("America");
+                await AddTeamAsync("Argentina");
+                await AddTeamAsync("Barcelona");
+                await AddTeamAsync("Bayer Leverkusen");
+                await AddTeamAsync("Bolivia");
+                await AddTeamAsync("Borussia Dortmund");
+                await AddTeamAsync("Brasil");
+                await AddTeamAsync("Bucaramanga");
+                await AddTeamAsync("Canada");
+                await AddTeamAsync("Chelsea");
+                await AddTeamAsync("Chile");
+                await AddTeamAsync("Colombia");
+                await AddTeamAsync("Costa Rica");
+                await AddTeamAsync("Ecuador");
+                await AddTeamAsync("Honduras");
+                await AddTeamAsync("Inter Milan");
+                await AddTeamAsync("Junior");
+                await AddTeamAsync("Juventus");
+                await AddTeamAsync("Liverpool");
+                await AddTeamAsync("Medellin");
+                await AddTeamAsync("Mexico");
+                await AddTeamAsync("Millonarios");
+                await AddTeamAsync("Nacional");
+                await AddTeamAsync("Once Caldas");
+                await AddTeamAsync("Panama");
+                await AddTeamAsync("Paraguay");
+                await AddTeamAsync("Peru");
+                await AddTeamAsync("PSG");
+                await AddTeamAsync("Real Madrid");
+                await AddTeamAsync("Santa Fe");
+                await AddTeamAsync("Uruguay");
+                await AddTeamAsync("USA");
+                await AddTeamAsync("Venezuela");
                 await _context.SaveChangesAsync();
             }
         }
 
-        private void AddTeam(string name)
+        private async Task AddTeamAsync(string name)
         {
-            _context.Teams.Add(new TeamEntity { Name = name, LogoPath = $"~/images/Teams/{name}.jpg" });
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\images\\Teams", $"{name}.jpg");
+            string imageId = await _blobHelper.UploadBlobAsync(path, "teams");
+            _context.Teams.Add(new TeamEntity { Name = name, LogoPath = imageId });
         }
 
         private async Task CheckTournamentsAsync()
@@ -95,12 +205,16 @@ namespace Soccer.Web.Data
                 DateTime startDate = DateTime.Today.AddMonths(2).ToUniversalTime();
                 DateTime endDate = DateTime.Today.AddMonths(3).ToUniversalTime();
 
+                string imageIdCopaAmerica = await UploadImageTournamentAsync("Copa America 2020.png");
+                string imageIdLigaAguila = await UploadImageTournamentAsync("Liga Aguila 2020-I.png");
+                string imageIdChampions = await UploadImageTournamentAsync("Champions 2020.png");
+
                 _context.Tournaments.Add(new TournamentEntity
                 {
                     StartDate = startDate,
                     EndDate = endDate,
                     IsActive = true,
-                    LogoPath = $"~/images/Tournaments/Copa America 2020.png",
+                    LogoPath = imageIdCopaAmerica,
                     Name = "Copa America 2020",
                     Groups = new List<GroupEntity>
                     {
@@ -315,7 +429,7 @@ namespace Soccer.Web.Data
                     StartDate = startDate,
                     EndDate = endDate,
                     IsActive = true,
-                    LogoPath = $"~/images/Tournaments/Liga Aguila 2020-I.png",
+                    LogoPath = imageIdLigaAguila,
                     Name = "Liga Aguila 2020-I",
                     Groups = new List<GroupEntity>
                     {
@@ -502,7 +616,7 @@ namespace Soccer.Web.Data
                     StartDate = startDate,
                     EndDate = endDate,
                     IsActive = true,
-                    LogoPath = $"~/images/Tournaments/Champions 2020.png",
+                    LogoPath = imageIdChampions,
                     Name = "Champions 2020",
                     Groups = new List<GroupEntity>
                     {
@@ -605,83 +719,23 @@ namespace Soccer.Web.Data
                     }
                 });
 
-
                 await _context.SaveChangesAsync();
             }
         }
 
-        private async Task CheckPreditionsAsync()
+        private async Task<string> UploadImageTournamentAsync(string name)
         {
-            if (!_context.Predictions.Any())
-            {
-                foreach (UserEntity user in _context.Users)
-                {
-                    if (user.UserType == UserType.User)
-                    {
-                        AddPrediction(user);
-                    }
-                }
-
-                await _context.SaveChangesAsync();
-            }
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\images\\Tournaments", name);
+            return await _blobHelper.UploadBlobAsync(path, "tournaments");
         }
 
-        private void AddPrediction(UserEntity user)
+        private class Photo
         {
-            Random random = new Random();
-            foreach (MatchEntity match in _context.Matches)
-            {
-                _context.Predictions.Add(new PredictionEntity
-                {
-                    GoalsLocal = random.Next(0, 5),
-                    GoalsVisitor = random.Next(0, 5),
-                    Match = match,
-                    User = user
-                });
-            }
+            public string Firstname { get; set; }
+
+            public string Lastname { get; set; }
+
+            public string Image { get; set; }
         }
-
-        private async Task<UserEntity> CheckUserAsync(
-            string document,
-            string firstName,
-            string lastName,
-            string email,
-            string phone,
-            string address,
-            UserType userType)
-        {
-            UserEntity user = await _userHelper.GetUserAsync(email);
-            if (user == null)
-            {
-                user = new UserEntity
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    UserName = email,
-                    PhoneNumber = phone,
-                    Address = address,
-                    Document = document,
-                    Team = _context.Teams.FirstOrDefault(),
-                    UserType = userType
-                };
-
-                await _userHelper.AddUserAsync(user, "123456");
-                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
-
-                var token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
-                await _userHelper.ConfirmEmailAsync(user, token);
-
-            }
-
-            return user;
-        }
-
-        private async Task CheckRolesAsync()
-        {
-            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
-            await _userHelper.CheckRoleAsync(UserType.User.ToString());
-        }
-
     }
 }
