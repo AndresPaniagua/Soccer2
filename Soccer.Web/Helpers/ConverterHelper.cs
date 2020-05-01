@@ -23,7 +23,6 @@ namespace Soccer.Web.Helpers
             _combosHelper = combosHelper;
         }
 
-
         public TeamEntity ToTeamEntity(TeamViewModel model, string path, bool isNew)
         {
             return new TeamEntity
@@ -58,8 +57,6 @@ namespace Soccer.Web.Helpers
             };
         }
 
-
-
         public async Task<GroupEntity> ToGroupEntityAsync(GroupViewModel model, bool isNew)
         {
             return new GroupEntity
@@ -84,7 +81,6 @@ namespace Soccer.Web.Helpers
                 TournamentId = groupEntity.Tournament.Id
             };
         }
-
 
         public async Task<GroupDetailEntity> ToGroupDetailEntityAsync(GroupDetailViewModel model, bool isNew)
         {
@@ -154,7 +150,6 @@ namespace Soccer.Web.Helpers
                 VisitorId = matchEntity.Visitor.Id
             };
         }
-
 
         public TournamentViewModel ToTournamentViewModel(TournamentEntity tournamentEntity)
         {

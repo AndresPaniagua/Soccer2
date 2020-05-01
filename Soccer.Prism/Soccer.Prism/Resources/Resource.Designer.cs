@@ -664,6 +664,15 @@ namespace Soccer.Prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Picture.
+        /// </summary>
+        public static string Picture {
+            get {
+                return ResourceManager.GetString("Picture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Where do you want to take the picture?.
         /// </summary>
         public static string PictureSource {
@@ -691,6 +700,15 @@ namespace Soccer.Prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Positions.
+        /// </summary>
+        public static string Positions {
+            get {
+                return ResourceManager.GetString("Positions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prediction.
         /// </summary>
         public static string Prediction {
@@ -705,6 +723,15 @@ namespace Soccer.Prism.Resources {
         public static string PredictionsFor {
             get {
                 return ResourceManager.GetString("PredictionsFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ranking.
+        /// </summary>
+        public static string Ranking {
+            get {
+                return ResourceManager.GetString("Ranking", resourceCulture);
             }
         }
         
@@ -732,6 +759,15 @@ namespace Soccer.Prism.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search user....
+        /// </summary>
+        public static string SearchUserPlaceHolder {
+            get {
+                return ResourceManager.GetString("SearchUserPlaceHolder", resourceCulture);
             }
         }
         

@@ -6,6 +6,7 @@ using Soccer.Common.Models;
 using Soccer.Common.Services;
 using Soccer.Prism.Helpers;
 using Soccer.Prism.Views;
+using Xamarin.Essentials;
 
 namespace Soccer.Prism.ViewModels
 {
@@ -80,8 +81,7 @@ namespace Soccer.Prism.ViewModels
             IsEnabled = false;
 
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = _apiService.CheckConnection();
-            if (!connection)
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 IsRunning = true;
                 IsEnabled = false;

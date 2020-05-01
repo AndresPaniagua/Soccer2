@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Essentials;
 
 namespace Soccer.Prism.ViewModels
 {
@@ -48,8 +49,7 @@ namespace Soccer.Prism.ViewModels
         {
             IsRunning = true;
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = _apiService.CheckConnection();
-            if (!connection)
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 IsRunning = false;
                 await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.ConnectionError, Languages.Accept);
@@ -86,7 +86,7 @@ namespace Soccer.Prism.ViewModels
                     Points = p.Points,
                     User = p.User
                 })
-                .Where(p => !p.Match.IsClosed && p.Match.DateLocal > DateTime.Now)
+                .Where(p => p.Match.IsClosed || p.Match.DateLocal <= DateTime.Now)
                 .OrderBy(p => p.Match.Date)
                 .ToList());
         }

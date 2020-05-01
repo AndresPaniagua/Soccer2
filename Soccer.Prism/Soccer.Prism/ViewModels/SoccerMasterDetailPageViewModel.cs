@@ -9,6 +9,7 @@ using Soccer.Prism.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Essentials;
 
 namespace Soccer.Prism.ViewModels
 {
@@ -48,8 +49,7 @@ namespace Soccer.Prism.ViewModels
         public async void ReloadUser()
         {
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = _apiService.CheckConnection();
-            if (!connection)
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 return;
             }

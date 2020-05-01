@@ -7,6 +7,7 @@ using Soccer.Prism.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Essentials;
 
 namespace Soccer.Prism.ViewModels
 {
@@ -47,8 +48,7 @@ namespace Soccer.Prism.ViewModels
         {
             IsRunning = true;
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = _apiService.CheckConnection();
-            if (!connection)
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 IsRunning = false;
                 await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.ConnectionError, Languages.Accept);

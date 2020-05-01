@@ -24,9 +24,6 @@ namespace Soccer.Web.Helpers
             return $"~/images/{folder}/{file}";
         }
 
-
-
-
         public string UploadImage(byte[] pictureArray, string folder)
         {
             MemoryStream stream = new MemoryStream(pictureArray);
